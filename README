@@ -1,0 +1,1 @@
+npx sequelize-cli model:generate --name Event --attributes title:string,description:string,utc_date:date
