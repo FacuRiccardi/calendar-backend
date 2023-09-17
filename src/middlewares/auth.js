@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 // const { StatusCodes } = require('http-status-codes')
 
 const authConfig = require('../../config/auth')
-const { AppError } = require('../utils/errors/AppError')
+const AppError = require('../utils/errors/AppError')
 const {
   NOT_AUTHORIZED,
   TOKEN_VALIDATION_ERROR
@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
       if (err) {
         throw new AppError(TOKEN_VALIDATION_ERROR)
       } else {
-        req.user = decoded.user
+        req.user = decoded
         next()
       }
     })

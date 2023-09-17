@@ -19,8 +19,7 @@ const signUp = async (req, res) => {
   })
 
   const token = jwt.sign({
-    userId: user.id,
-    name: user.name,
+    id: user.id,
     email: user.email
   }, authConfig.secret, { expiresIn: '1d' })
 
@@ -37,7 +36,10 @@ const signIn = async (req, res) => {
     if (!(await user.validPassword(password))) {
       throw new AppError(WRONG_PASSWORD)
     } else {
-      const token = jwt.sign({ user }, authConfig.secret, { expiresIn: '1d' })
+      const token = jwt.sign({
+        id: user.id,
+        email: user.email
+      }, authConfig.secret, { expiresIn: '1d' })
 
       res.status(StatusCodes.OK).json({ name: user.name, email: user.email, token })
     }
@@ -70,8 +72,6 @@ const updateUser = async (req, res) => {
       name: name || user.name,
       password: password || user.password
     }
-
-    console.log(updatedUser)
 
     await user.update({ ...updatedUser })
 

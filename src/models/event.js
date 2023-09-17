@@ -37,11 +37,27 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    utc_date: {
+    date: {
       type: DataTypes.DATE,
       validate: {
         isDate: {
           msg: 'The date is not valid'
+        }
+      }
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          msg: 'The durations is not valid'
+        },
+        min: {
+          args: [15],
+          msg: 'The min duration is 15 minutes'
+        },
+        max: {
+          args: [600],
+          msg: 'The max duration is 600 minutes'
         }
       }
     }

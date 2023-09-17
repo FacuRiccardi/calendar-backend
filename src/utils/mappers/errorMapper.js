@@ -42,6 +42,7 @@ const appErrorMapper = (error) => {
 }
 
 const serverErrorMapper = (error) => {
+  console.log(error)
   return {
     statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     message: 'Something went wrong',

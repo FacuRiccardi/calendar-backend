@@ -9,6 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'userId'
+        }
+      },
       title: {
         type: Sequelize.STRING,
         allowNull: false
@@ -16,8 +25,12 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      utc_date: {
+      date: {
         type: Sequelize.DATE,
+        allowNull: false
+      },
+      duration: {
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: {

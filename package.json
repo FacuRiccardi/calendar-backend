@@ -7,7 +7,8 @@
     "start": "npx sequelize-cli db:migrate && node -r dotenv/config src/app.js",
     "dev": "nodemon -r dotenv/config src/app.js",
     "db:migrate": "sequelize-cli db:migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-swagger": "node ./src/swagger/index.js"
   },
   "author": "",
   "license": "ISC",
