@@ -1,8 +1,9 @@
 const { StatusCodes } = require('http-status-codes')
-const { ValidationError, UniqueConstraintError } = require('sequelize')
+const { UniqueConstraintError } = require('sequelize')
 const { validationErrorMapper, uniqueConstraintErrorMapper, appErrorMapper, serverErrorMapper } = require('../utils/mappers/errorMapper')
 
 const AppError = require('../utils/errors/AppError')
+const ValidationError = require('../utils/errors/ValidationError')
 
 const errorHandler = (error, req, res, next) => {
   switch (error.constructor) {

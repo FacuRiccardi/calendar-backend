@@ -4,8 +4,8 @@ const validationErrorMapper = (error) => {
   const errors = {}
 
   error.errors.forEach((err) => {
-    if (errors[err.path]) errors[err.path].push(err.message)
-    else errors[err.path] = [err.message]
+    if (errors[err.path]) errors[err.path].push(err.msg)
+    else errors[err.path] = [err.msg]
   })
 
   return {
@@ -42,7 +42,6 @@ const appErrorMapper = (error) => {
 }
 
 const serverErrorMapper = (error) => {
-  console.log(error)
   return {
     statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
     message: 'Something went wrong',

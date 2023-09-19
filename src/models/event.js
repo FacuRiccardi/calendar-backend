@@ -19,47 +19,16 @@ module.exports = (sequelize, DataTypes) => {
   }
   Event.init({
     title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: {
-          args: [1, 100],
-          msg: 'The length of your name must be between 1 and 100'
-        }
-      }
+      type: DataTypes.STRING
     },
     description: {
-      type: DataTypes.STRING,
-      validate: {
-        len: {
-          args: [1, 150],
-          msg: 'The length of your name must be between 1 and 150'
-        }
-      }
+      type: DataTypes.STRING
     },
     date: {
-      type: DataTypes.DATE,
-      validate: {
-        isDate: {
-          msg: 'The date is not valid'
-        }
-      }
+      type: DataTypes.DATE
     },
     duration: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isInt: {
-          msg: 'The durations is not valid'
-        },
-        min: {
-          args: [15],
-          msg: 'The min duration is 15 minutes'
-        },
-        max: {
-          args: [600],
-          msg: 'The max duration is 600 minutes'
-        }
-      }
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,

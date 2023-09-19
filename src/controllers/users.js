@@ -47,50 +47,32 @@ const signIn = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-  const { id } = req.user
+  const user = req.user
 
-  const user = await User.findOne({ where: { id } })
-
-  if (!user) {
-    throw new AppError(USER_NOT_FOUND)
-  } else {
-    res.status(StatusCodes.OK).json({ name: user.name, email: user.email })
-  }
+  res.status(StatusCodes.OK).json({ name: user.name, email: user.email })
 }
 
 const updateUser = async (req, res) => {
-  const { id } = req.user
+  const user = req.user
 
   const { name, password } = req.body
 
-  const user = await User.findOne({ where: { id } })
-
-  if (!user) {
-    throw new AppError(USER_NOT_FOUND)
-  } else {
-    const updatedUser = {
-      name: name || user.name,
-      password: password || user.password
-    }
-
-    await user.update({ ...updatedUser })
-
-    res.status(StatusCodes.OK).json({ name: user.name, email: user.email })
+  const updatedUser = {
+    name: name || user.name,
+    password: password || user.password
   }
+
+  await user.update({ ...updatedUser })
+
+  res.status(StatusCodes.OK).json({ name: user.name, email: user.email })
 }
 
 const deleteUser = async (req, res) => {
-  const { id } = req.user
+  const user = req.user
 
-  const user = await User.findOne({ where: { id } })
+  await user.destroy()
 
-  if (!user) {
-    throw new AppError(USER_NOT_FOUND)
-  } else {
-    await user.destroy()
-
-    res.status(StatusCodes.NO_CONTENT).json({})
-  }
+  res.status(StatusCodes.NO_CONTENT).json({})
 }
 
 module.exports = {

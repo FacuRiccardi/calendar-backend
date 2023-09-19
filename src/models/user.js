@@ -22,43 +22,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init({
     name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isAlpha: {
-          msg: 'Your name can only have letters'
-        },
-        len: {
-          args: [4, 150],
-          msg: 'The length of your name must be between 4 and 150'
-        }
-      }
+      type: DataTypes.STRING
     },
     email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'The email cannot be null'
-        },
-        isEmail: {
-          msg: 'The email is not valid'
-        },
-        len: {
-          args: [1, 200],
-          msg: 'The length of your email must be lower than 200 characters'
-        }
-      }
+      type: DataTypes.STRING
     },
     password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: {
-          args: [8, 16],
-          msg: 'The length of your password must be between 8 and 16'
-        }
-      }
+      type: DataTypes.STRING
     }
   }, {
     hooks: {
