@@ -1,1 +1,215 @@
-npx sequelize-cli model:generate --name Event --attributes title:string,description:string,utc_date:date
+Configuration needed to start the project:
+
+- Install all the dependencies with "npm i"
+- Run "docker-compose up" to start the images for the postgresql DBs
+- Modify the .env file to match your variables
+
+To run the project:
+
+- Run "npm run start", this will run the migrations on your DB
+- Also, you can run "npm run dev", this will start nodemon, to listen for changes in the code (keep in mind, that this command doesn't run the migrations)
+- If you need to run only the migrations, you can use "npm run db:migrate"
+- To run the Tests, use "npm run test"
+
+API Documentation: https://documenter.getpostman.com/view/5238412/2s9YCARAmD
+
+
+TO DO:
+
+- Manage Session token properly (Logout, Expired tokens, etc)
+- Swagger documentation
+- More test cases for every functionality
+- Implement traductions
+- Create a Config model to save the User configuration
+- Use more CONSTANTS and less "hardcoded_values"
+- Usage of "type": "module"
+
+
+How to use the API:
+
+- Create a user:
+    description: Creates an user with the provided data
+    endpoint: /api/signup
+    Method: POST
+    Body:
+      - name: string [required, only letters, length between 4 and 150]
+      - email: string [required, valid email, length less than 200]
+      - password: string [required, length between 8 and 16]
+    return json:
+      {
+        name: string,
+        email: string
+        token: string
+      }
+
+- Sign in:
+    description: Search for an user with email, and if password its correct, return token
+    endpoint: /api/signin
+    Method: POST
+    Body:
+      - email: string [required, valid email, length less than 200]
+      - password: string [required, length between 8 and 16]
+    return json:
+      {
+        name: string,
+        email: string
+        token: string
+      }
+
+- Update user:
+    description: Updates user with the provided data
+    endpoint: /api/user
+    Method: PATCH
+    Auth: Bearer token
+    Body:
+      - name: string [only letters, length between 4 and 150]
+      - password: string [length between 8 and 16]
+    return json:
+      {
+        name: string,
+        email: string
+      }
+  
+- Get user information:
+    description: Returns the user Information
+    endpoint: /api/user
+    Method: GET
+    Auth: Bearer token
+    return json:
+      {
+        name: string,
+        email: string
+      }
+
+- Delete user:
+    description: Deletes the user
+    endpoint: /api/user
+    Method: DELETE
+    Auth: Bearer token
+    return No Content
+
+- Create Event:
+    description: Create an Event with the provided data
+    endpoint: /api/event
+    Method: POST
+    Auth: Bearer token
+    Body:
+      - title: string [required, length between 1 and 100]
+      - description: string [length between 1 and 200]
+      - date: date [required, only ISO 8601 format]
+      - duration: int [required, only multiple of 15]
+    return json:
+      {
+        id: int,
+        title: string,
+        description: string,
+        date: date,
+        duration: int
+      }
+
+- Get Events between:
+    description: Get all the events between the provided dates
+    endpoint: /api/event
+    Method: GET
+    Auth: Bearer token
+    Query params:
+      - initDate: date [required, only YYYY-MM-DD format]
+      - endDate: date [required, only YYYY-MM-DD format]
+    returns json:
+      {
+        events: [
+          {
+            id: int,
+            title: string,
+            description: string,
+            date: date,
+            duration: int
+          }
+        ]
+      }
+  
+- Get Next Events:
+    description: Get all the events from today to 7 days in the future
+    endpoint: /api/event
+    Method: GET
+    Auth: Bearer token
+    returns json:
+      {
+        events: [
+          {
+            id: int,
+            title: string,
+            description: string,
+            date: date,
+            duration: int
+          }
+        ]
+      }
+
+- Update Event:
+    description: Updates an event that matches the id with the provided data
+    endpoint: /api/event/:id
+    Method: PATCH
+    Auth: Bearer token
+    Path param:
+      - id: int [ required ]
+    Body:
+      - title: string [length between 1 and 100]
+      - description: string [length between 1 and 200]
+      - date: date [only ISO 8601 format]
+      - duration: int [only multiple of 15]
+    return json:
+      {
+        id: int,
+        title: string,
+        description: string,
+        date: date,
+        duration: int
+      }
+
+- Delete user:
+    description: Deletes an event that matches the id
+    endpoint: /api/event/:id
+    Method: DELETE
+    Auth: Bearer token
+    Path param:
+      - id: int [ required ]
+    return No Content
+
+
+- Errors Reponses:
+
+  - Validation error:
+    json: {
+      statusCode: 400,
+      message: "Validation error",
+      type: "Validation Error",
+      errors: {
+          fieldName: [ errors: string ]
+      }
+    }
+
+  - Unique constraint error:
+    json: {
+      statusCode: 400,
+      message: "Validation error",
+      type: "Unique Constraint Error",
+      errors: {
+          fieldName: [ errors: string ]
+      }
+    }
+  
+  - App error:
+    json: {
+      statusCode: 400,
+      message: "Wrong password",
+      type: "App error"
+    }
+
+  - Server error:
+    json: {
+      statusCode: 500,
+      message: "Something went wrong",
+      type: "Unknown",
+      error: { if development = error }
+    }

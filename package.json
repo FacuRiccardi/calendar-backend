@@ -9,8 +9,7 @@
     "db:migrate": "sequelize-cli db:migrate",
     "test": "npm run drop-test-db && npm run create-test-db && npx sequelize-cli db:migrate --env test && jest --runInBand",
     "drop-test-db": "npx sequelize-cli db:drop --env test",
-    "create-test-db": "npx sequelize-cli db:create --env test",
-    "generate-swagger": "node ./src/swagger/index.js"
+    "create-test-db": "npx sequelize-cli db:create --env test"
   },
   "author": "",
   "license": "ISC",
