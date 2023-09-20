@@ -45,7 +45,7 @@ const getEvents = async (req, res) => {
 const getNextEvents = async (req, res) => {
   const { id } = req.user
 
-  const initDate = new Date()
+  const initDate = new Date().toISOString()
   const endDate = new Date()
   // Sum 7 days for the week
   endDate.setDate(endDate.getDate() + 7)
