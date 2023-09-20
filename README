@@ -6,7 +6,7 @@ Configuration needed to start the project:
 
 To run the project:
 
-- Run "npm run start", this will run the migrations on your DB
+- Run "npm run start", this will run the migrations on your DB and start the project
 - Also, you can run "npm run dev", this will start nodemon, to listen for changes in the code (keep in mind, that this command doesn't run the migrations)
 - If you need to run only the migrations, you can use "npm run db:migrate"
 - To run the Tests, use "npm run test"
